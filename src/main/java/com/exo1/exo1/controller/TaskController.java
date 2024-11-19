@@ -31,11 +31,14 @@ public class TaskController {
 
     @GetMapping("/status/{status}")
     public ResponseEntity<List<TaskDto>> findByStatus(
-            @PageableDefault(size = 10, page = 0) Pageable pageable
-            ) {
-        List<TaskDto> tasks = taskService.findByStatus("status", pageable.getPageNumber(), pageable.getPageSize());
+            @PathVariable String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        List<TaskDto> tasks = taskService.findByStatus(status, page, size);
         return ResponseEntity.ok(tasks);
     }
+
 
     @PostMapping
     public ResponseEntity<TaskDto> save(@RequestBody TaskDto etudiantDto) {

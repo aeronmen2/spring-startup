@@ -4,6 +4,8 @@ import com.exo1.exo1.dto.TaskDto;
 import com.exo1.exo1.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,14 @@ public class TaskController {
     public ResponseEntity<TaskDto> findById(@PathVariable Long id)
     {
         return ResponseEntity.ok(taskService.findById(id));
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<TaskDto>> findByStatus(
+            @PageableDefault(size = 10, page = 0) Pageable pageable
+            ) {
+        List<TaskDto> tasks = taskService.findByStatus("status", pageable.getPageNumber(), pageable.getPageSize());
+        return ResponseEntity.ok(tasks);
     }
 
     @PostMapping

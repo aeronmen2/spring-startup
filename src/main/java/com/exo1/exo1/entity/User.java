@@ -9,7 +9,9 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes =
+        @Index(name = "idx_user_email", columnList = "email", unique = true)
+)
 @Getter
 @Setter
 @AllArgsConstructor

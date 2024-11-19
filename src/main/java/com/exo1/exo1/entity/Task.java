@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "task")
+@Table(name = "task", indexes = {
+        @Index(name = "idx_task_status", columnList = "status"),
+        @Index(name = "idx_task_project", columnList = "projet_id")
+})
 @Getter
 @Setter
 @AllArgsConstructor
